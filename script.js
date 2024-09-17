@@ -132,45 +132,46 @@ function generateVoice(isPreview) {
             $('#loading').hide();
             $('#generateButton').prop('disabled', false);
             $('#previewButton').prop('disabled', false);
-        },
-        error: function () {
-            alert('请求失败，请检查网络连接');
-            $('#loading').hide();
-            $('#generateButton').prop('disabled', false);
-            $('#previewButton').prop('disabled', false);
-        }
-    });
-}
-
-function addHistoryItem(timestamp, text, audioURL) {
-    const historyItems = $('#historyItems');
-    const historyItem = $(`
-        <div class="history-item">
-            <span>${timestamp} - ${text}</span>
-            <div>
-                <button class="btn btn-secondary" onclick="playAudio('${audioURL}')">播放</button>
-                <button class="btn btn-info" onclick="downloadAudio('${audioURL}')">下载</button>
+            },
+            error: function () {
+                alert('请求失败，请检查网络连接');
+                $('#loading').hide();
+                $('#generateButton').prop('disabled', false);
+                $('#previewButton').prop('disabled', false);
+            }
+        });
+    }
+    
+    function addHistoryItem(timestamp, text, audioURL) {
+        const historyItems = $('#historyItems');
+        const historyItem = $(`
+            <div class="history-item">
+                <span>${timestamp} - ${text}</span>
+                <div>
+                    <button class="btn btn-secondary" onclick="playAudio('${audioURL}')">播放</button>
+                    <button class="btn btn-info" onclick="downloadAudio('${audioURL}')">下载</button>
+                </div>
             </div>
-        </div>
-    `);
-    historyItems.append(historyItem);
-}
-
-function playAudio(audioURL) {
-    const audioElement = $('#audio')[0];
-    audioElement.src = audioURL;
-    audioElement.load();  // 确保加载音频文件
-    audioElement.play();
-}
-
-function downloadAudio(audioURL) {
-    const link = document.createElement('a');
-    link.href = audioURL;
-    link.download = 'audio.mp3';
-    link.click();
-}
-
-function clearHistory() {
-    $('#historyItems').empty();
-    alert("历史记录已清除！");
-}
+        `);
+        historyItems.append(historyItem);
+    }
+    
+    function playAudio(audioURL) {
+        const audioElement = $('#audio')[0];
+        audioElement.src = audioURL;
+        audioElement.load();  // 确保加载音频文件
+        audioElement.play();
+    }
+    
+    function downloadAudio(audioURL) {
+        const link = document.createElement('a');
+        link.href = audioURL;
+        link.download = 'audio.mp3';
+        link.click();
+    }
+    
+    function clearHistory() {
+        $('#historyItems').empty();
+        alert("历史记录已清除！");
+    }
+    
