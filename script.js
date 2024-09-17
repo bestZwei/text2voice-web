@@ -68,12 +68,14 @@ $(document).ready(function () {
         const apiUrl = apiConfig[apiName].url;
         const speaker = $('#speaker').val();
         const text = $('#text').val();
-        let url = `${apiUrl}?text=${encodeURIComponent(text)}&speak=${speaker}`;
+        let url;
 
         if (apiName === 'leftsite') {
             const rate = $('#rate').val();
             const pitch = $('#pitch').val();
-            url += `&r=${rate}&p=${pitch}&o=audio-24khz-48kbitrate-mono-mp3`;
+            url = `${apiUrl}?t=${encodeURIComponent(text)}&v=${speaker}&r=${rate}&p=${pitch}&o=audio-24khz-48kbitrate-mono-mp3`;
+        } else {
+            url = `https://api.pearktrue.cn/api/aivoicenet/?text=${encodeURIComponent(text)}&speak=${encodeURIComponent(speaker)}`;
         }
 
         $('#loading').show();
@@ -97,7 +99,7 @@ $(document).ready(function () {
                 $('#loading').hide();
             },
             error: function () {
-                alert('请求失败，请检查网络连接');
+                alert('请求失败，请检查网络连接或参数设置');
                 $('#loading').hide();
             }
         });
@@ -122,7 +124,7 @@ function playAudio(audioURL) {
     const audioSource = $('#audioSource');
     audioSource.attr('src', audioURL);
 
-    const audioElement = $('#audioPlayer audio')[0];
+    const audioElement = $('#audio')[0];
     audioElement.load();
     audioElement.play();
 }
@@ -130,7 +132,7 @@ function playAudio(audioURL) {
 function downloadAudio(audioURL) {
     const link = document.createElement('a');
     link.href = audioURL;
-    link.download = 'audio.mp3';
+    link.download = 'voice.mp3';
     link.click();
 }
 
