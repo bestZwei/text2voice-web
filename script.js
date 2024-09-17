@@ -15,43 +15,65 @@ const apiConfig = {
             "蕊晗", "沁美", "芸柔", "蕊韵", "宇彦", "芸茜", "蕊诗", "晓墨-青年女声", "云枫-磁性男声",
             "晓悠-儿童音", "晓睿-老年女声", "晓梦-年轻女声", "云野-成熟男声", "晓双-儿童音", "晓秋-中年女声",
             "云皓-中年男声", "晓颜-青年女声", "云泽-成熟浑厚", "晓甄-温柔女声", "云非-香港", "云溢-香港",
-            "云信-香港", "源司", "银时", "绫音", "绚濑", "星奈", "莉亚", "莉娜", "琉璃", "力丸",
-            "小雪", "翔太", "小春", "小梓", "春香", "佑果", "小彩", "美月", "影山", "紫苑",
-            "时雨", "龙之介", "梨斗", "悠里", "穗乃香", "Liam", "Mason", "Skylar", "Vanessa", "Kayla",
-            "Sadie", "Daniel", "Jacob", "Natalie", "Tyler", "Lily", "Thomas", "Harper", "Henry", "Naomi",
-            "Ethan", "Emma", "Ava", "Lucas", "Chloe", "Caleb", "Sofia", "Gabriel", "Ivy"
+            "云信-香港"
         ]
     },
     voiceapi: {
         url: "https://voiceapi.firefly.oy.lc/tts",
-        speakersUrl: "https://voiceapi.firefly.oy.lc/voices",
+        speakers: {
+            "zh-CN-XiaoxiaoNeural": "晓晓",
+            "zh-CN-YunxiNeural": "云希",
+            "zh-CN-YunjianNeural": "云健",
+            "zh-CN-XiaoyiNeural": "晓伊",
+            "zh-CN-YunyangNeural": "云扬",
+            "zh-CN-XiaochenNeural": "晓辰",
+            "zh-CN-XiaochenMultilingualNeural": "晓辰 多语言",
+            "zh-CN-XiaohanNeural": "晓涵",
+            "zh-CN-XiaomengNeural": "晓梦",
+            "zh-CN-XiaomoNeural": "晓墨",
+            "zh-CN-XiaoqiuNeural": "晓秋",
+            "zh-CN-XiaorouNeural": "晓柔",
+            "zh-CN-XiaoruiNeural": "晓睿",
+            "zh-CN-XiaoshuangNeural": "晓双",
+            "zh-CN-XiaoxiaoDialectsNeural": "晓晓 方言",
+            "zh-CN-XiaoxiaoMultilingualNeural": "晓晓 多语言",
+            "zh-CN-XiaoyanNeural": "晓颜",
+            "zh-CN-XiaoyouNeural": "晓悠",
+            "zh-CN-XiaoyuMultilingualNeural": "晓宇 多语言",
+            "zh-CN-XiaozhenNeural": "晓甄",
+            "zh-CN-YunfengNeural": "云枫",
+            "zh-CN-YunhaoNeural": "云皓",
+            "zh-CN-YunjieNeural": "云杰",
+            "zh-CN-YunxiaNeural": "云夏",
+            "zh-CN-YunyeNeural": "云野",
+            "zh-CN-YunyiMultilingualNeural": "云逸 多语言",
+            "zh-CN-YunzeNeural": "云泽",
+            "zh-CN-YunfanMultilingualNeural": "Yunfan Multilingual",
+            "zh-CN-YunxiaoMultilingualNeural": "Yunxiao Multilingual",
+            "zh-CN-guangxi-YunqiNeural": "云奇 广西",
+            "zh-CN-henan-YundengNeural": "云登",
+            "zh-CN-liaoning-XiaobeiNeural": "晓北 辽宁",
+            "zh-CN-liaoning-YunbiaoNeural": "云彪 辽宁",
+            "zh-CN-shaanxi-XiaoniNeural": "晓妮",
+            "zh-CN-shandong-YunxiangNeural": "云翔",
+            "zh-CN-sichuan-YunxiNeural": "云希 四川",
+            "zh-HK-HiuMaanNeural": "曉曼",
+            "zh-HK-WanLungNeural": "雲龍",
+            "zh-HK-HiuGaaiNeural": "曉佳",
+            "zh-TW-HsiaoChenNeural": "曉臻",
+            "zh-TW-YunJheNeural": "雲哲",
+            "zh-TW-HsiaoYuNeural": "曉雨"
+        }
     }
 };
 
 function updateSpeakerOptions(apiName) {
+    const speakers = apiConfig[apiName].speakers;
     const speakerSelect = $('#speaker');
     speakerSelect.empty();
-
-    if (apiName === 'aivoicenet') {
-        const speakers = apiConfig[apiName].speakers;
-        speakers.forEach(speaker => {
-            speakerSelect.append(new Option(speaker, speaker));
-        });
-    } else if (apiName === 'voiceapi') {
-        $.ajax({
-            url: `${apiConfig[apiName].speakersUrl}?l=zh-CN`,
-            method: 'GET',
-            success: function(response) {
-                const speakers = response;
-                for (const [key, value] of Object.entries(speakers)) {
-                    speakerSelect.append(new Option(value, key));
-                }
-            },
-            error: function() {
-                alert('无法获取讲述人列表，请检查网络连接');
-            }
-        });
-    }
+    Object.entries(speakers).forEach(([key, value]) => {
+        speakerSelect.append(new Option(value, key));
+    });
 
     const showAdditionalParams = apiName === 'voiceapi';
     $('#voiceapiParams').toggle(showAdditionalParams);
@@ -67,13 +89,13 @@ function updateSliderLabel(sliderId, labelId) {
 }
 
 $(document).ready(function () {
+    // 设置初始API为voiceapi
+    updateSpeakerOptions('voiceapi');
+
     // 更新所选 API 的讲述人选项
     $('#api').on('change', function () {
         updateSpeakerOptions(this.value);
     });
-
-    // 设置初始的讲述人选项
-    updateSpeakerOptions('aivoicenet');
 
     // 初始化语速和语调滑块
     updateSliderLabel('rate', 'rateValue');

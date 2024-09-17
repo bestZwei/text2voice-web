@@ -20,8 +20,8 @@
                 <div class="form-group">
                     <label for="api">选择API：</label>
                     <select class="form-control" id="api" required>
-                        <option value="aivoicenet">API 1</option>
                         <option value="voiceapi">API 2</option>
+                        <option value="aivoicenet">API 1</option>
                     </select>
                 </div>
                 <div id="commonParams">
@@ -34,7 +34,7 @@
                         <select class="form-control" id="speaker" required></select>
                     </div>
                 </div>
-                <div id="voiceapiParams" style="display: none;">
+                <div id="voiceapiParams">
                     <div class="form-group slider-container">
                         <label for="rate">语速: <span id="rateValue">0</span></label>
                         <input type="range" class="form-control-range" id="rate" name="rate" min="-100" max="100" value="0">
