@@ -13,36 +13,36 @@
 <div class="container-fluid mt-5">
     <div class="row justify-content-center">
         <!-- 表单容器 -->
-        <div class="col-md-5 mb-3">
+        <div class="col-md-8 col-lg-6 mb-3">
             <div class="card shadow-sm">
-                <div class="card-header text-center">
+                <div class="card-header bg-primary text-center text-white">
                     <h2>文本转语音</h2>
                 </div>
                 <div class="card-body">
                     <form id="text2voice-form">
                         <!-- API选择 -->
                         <div class="form-group">
-                            <label for="api" data-toggle="tooltip" title="选择文本转语音的API接口">选择API：</label>
+                            <label for="api">选择API：</label>
                             <select class="form-control" id="api" required>
                                 <option value="voice-api">Voice API</option>
                             </select>
                         </div>
                         <div id="commonParams">
                             <div class="form-group">
-                                <label for="text" data-toggle="tooltip" title="输入要转换为语音的文本">输入文本:</label>
+                                <label for="text">输入文本:</label>
                                 <textarea class="form-control" id="text" rows="4" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="speaker" data-toggle="tooltip" title="选择语音合成的讲述人">选择讲述人:</label>
+                                <label for="speaker">选择讲述人:</label>
                                 <select class="form-control" id="speaker" required></select>
                             </div>
                         </div>
                         <div id="voiceapiParams">
-                            <div class="form-group slider-container">
+                            <div class="form-group">
                                 <label for="rate">语速: <span id="rateValue">0</span></label>
                                 <input type="range" class="form-control-range" id="rate" name="rate" min="-100" max="100" value="0">
                             </div>
-                            <div class="form-group slider-container">
+                            <div class="form-group">
                                 <label for="pitch">语调: <span id="pitchValue">0</span></label>
                                 <input type="range" class="form-control-range" id="pitch" name="pitch" min="-100" max="100" value="0">
                             </div>
@@ -62,9 +62,9 @@
         </div>
         
         <!-- 历史记录容器 -->
-        <div class="col-md-5 mb-3">
+        <div class="col-md-8 col-lg-6 mb-3">
             <div class="card shadow-sm">
-                <div class="card-header text-center">
+                <div class="card-header bg-secondary text-center text-white">
                     <h2>历史记录</h2>
                 </div>
                 <div class="card-body" style="max-height: 500px; overflow-y: auto;">
@@ -77,8 +77,8 @@
 </div>
 
 <!-- 页脚 -->
-<footer class="text-center mt-5">
-    <p>作者 <a href="https://zwei.de.eu.org" target="_blank">Zwei</a> | <a href="https://github.com/bestZwei/text2voice-web" target="_blank">Github</a></p>
+<footer class="text-center mt-5 bg-dark text-white p-3">
+    <p>作者 <a href="https://zwei.de.eu.org" target="_blank" class="text-white">Zwei</a> | <a href="https://github.com/bestZwei/text2voice-web" target="_blank" class="text-white">Github</a></p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
