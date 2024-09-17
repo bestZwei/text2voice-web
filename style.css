@@ -11,13 +11,13 @@ body {
 
 .card {
     background-color: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    transition: transform 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .card-header {
@@ -34,7 +34,8 @@ body {
 
 textarea {
     resize: none;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    border-radius: 4px;
 }
 
 textarea:focus {
@@ -75,15 +76,23 @@ textarea:focus {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .history-item:hover {
     background-color: #f1f1f1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .history-item button {
     margin-left: 10px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.history-item button:hover {
+    background-color: #0056b3;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .history-item span {
@@ -91,13 +100,31 @@ textarea:focus {
     margin-right: 20px;
 }
 
-#generateButton {
+#generateButton, #previewButton {
     position: relative;
     transition: background-color 0.3s;
 }
 
-#generateButton:disabled {
+#generateButton:disabled, #previewButton:disabled {
     background-color: #6c757d;
+}
+
+footer {
+    padding: 20px;
+    background-color: #007bff;
+    color: white;
+    position: relative;
+    width: 100%;
+    margin-top: 50px;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 768px) {
