@@ -1,6 +1,6 @@
 const apiConfig = {
     "voice-api": {
-        url: "https://voiceapi.firefly.oy.lc/tts",
+        url: "https://ttsapi.zwei.de.eu.org/tts",
         speakers: {
             "zh-CN-XiaoxiaoNeural": "晓晓",
             "zh-CN-YunxiNeural": "云希",
@@ -109,33 +109,39 @@ function generateVoice(isPreview) {
     $('#generateButton').prop('disabled', true);
     $('#previewButton').prop('disabled', true);
 
-    $.ajax({
-        url: url,
+    fetch(url, {
         method: 'GET',
-        xhrFields: {
-            responseType: 'blob' // 确保返回的是一个Blob对象
-        },
-        success: function (blob) {
-            const voiceUrl = URL.createObjectURL(blob);
-            $('#audio').attr('src', voiceUrl);
-            $('#audio')[0].load();  // 确保加载音频文件
-            if (!isPreview) {
-                $('#download').attr('href', voiceUrl);
-                const timestamp = new Date().toLocaleTimeString();  // 获取当前时间
-                const shortenedText = text.length > 5 ? text.substring(0, 5) + '...' : text;  // 截取前5个字
-                addHistoryItem(timestamp, shortenedText, voiceUrl);
-            }
-            $('#result').show();
-            $('#loading').hide();
-            $('#generateButton').prop('disabled', false);
-            $('#previewButton').prop('disabled', false);
-        },
-        error: function () {
-            alert('请求失败，请检查网络连接');
-            $('#loading').hide();
-            $('#generateButton').prop('disabled', false);
-            $('#previewButton').prop('disabled', false);
+        headers: {
+            'x-api-key': '@ak47'
         }
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        const voiceUrl = URL.createObjectURL(blob);
+        $('#audio').attr('src', voiceUrl);
+        $('#audio')[0].load();  // 确保加载音频文件
+        if (!isPreview) {
+            $('#download').attr('href', voiceUrl);
+            const timestamp = new Date().toLocaleTimeString();  // 获取当前时间
+            const shortenedText = text.length > 5 ? text.substring(0, 5) + '...' : text;  // 截取前5个字
+            addHistoryItem(timestamp, shortenedText, voiceUrl);
+        }
+        $('#result').show();
+        $('#loading').hide();
+        $('#generateButton').prop('disabled', false);
+        $('#previewButton').prop('disabled', false);
+    })
+    .catch(error => {
+        console.error('There was a problem with your fetch operation:', error);
+        alert('请求失败，请检查网络连接');
+        $('#loading').hide();
+        $('#generateButton').prop('disabled', false);
+        $('#previewButton').prop('disabled', false);
     });
 }
 
