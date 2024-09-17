@@ -1,6 +1,8 @@
+// 获取环境变量 VOICE_API_URLS
+const apiUrls = process.env.VOICE_API_URLS ? process.env.VOICE_API_URLS.split(',') : ["https://voiceapi.firefly.oy.lc"];
 const apiConfig = {
     "voice-api": {
-        url: "https://voiceapi.firefly.oy.lc/tts",
+        urls: apiUrls,
         speakers: {
             "zh-CN-XiaoxiaoNeural": "晓晓",
             "zh-CN-YunxiNeural": "云希",
@@ -48,13 +50,23 @@ const apiConfig = {
     }
 };
 
-function updateSpeakerOptions(apiName) {
-    const speakers = apiConfig[apiName].speakers;
+function updateApiOptions(apiConfig) {
+    const apiSelect = $('#api');
+    apiSelect.empty();
+    apiConfig["voice-api"].urls.forEach((url, index) => {
+        apiSelect.append(new Option(`voice-api-${index + 1}`, url));
+    });
+}
+
+function updateSpeakerOptions(apiConfig) {
+    const speakers = apiConfig["voice-api"].speakers;
     const speakerSelect = $('#speaker');
     speakerSelect.empty();
     Object.entries(speakers).forEach(([key, value]) => {
         speakerSelect.append(new Option(value, key));
     });
+
+    $('#voiceapiParams').show();
 }
 
 function updateSliderLabel(sliderId, labelId) {
@@ -69,13 +81,17 @@ function updateSliderLabel(sliderId, labelId) {
 $(document).ready(function () {
     // 启用工具提示
     $('[data-toggle="tooltip"]').tooltip();
-    
-    // 设置初始API为voice-api
-    updateSpeakerOptions('voice-api');
 
-    // 更新所选 API 的讲述人选项
+    // 更新API选项
+    updateApiOptions(apiConfig);
+
+    // 设置初始API为第一个 voice-api
+    $('#api').val(apiConfig["voice-api"].urls[0]);
+    updateSpeakerOptions(apiConfig);
+
+    // 更新所选 URL 的讲述人选项
     $('#api').on('change', function () {
-        updateSpeakerOptions(this.value);
+        updateSpeakerOptions(apiConfig);
     });
 
     // 初始化语速和语调滑块
@@ -93,11 +109,10 @@ $(document).ready(function () {
 });
 
 function generateVoice(isPreview) {
-    const apiName = $('#api').val();
-    const apiUrl = apiConfig[apiName].url;
+    const apiUrl = $('#api').val();
     const speaker = $('#speaker').val();
     const text = $('#text').val();
-    const previewText = isPreview ? text.substring(0, 5) : text;  // 预览时获取前5个字
+    const previewText = isPreview ? text.substring(0, 20) : text;  // 预览时获取前20个字
     let url = `${apiUrl}?t=${encodeURIComponent(previewText)}&v=${encodeURIComponent(speaker)}`;
 
     const rate = $('#rate').val();
@@ -122,7 +137,7 @@ function generateVoice(isPreview) {
             if (!isPreview) {
                 $('#download').attr('href', voiceUrl);
                 const timestamp = new Date().toLocaleTimeString();  // 获取当前时间
-                const shortenedText = text.length > 5 ? text.substring(0, 5) + '...' : text;  // 截取前5个字
+                const shortenedText = text.length > 20 ? text.substring(0, 20) + '...' : text;  // 截取前20个字
                 addHistoryItem(timestamp, shortenedText, voiceUrl);
             }
             $('#result').show();

@@ -24,7 +24,7 @@
                         <div class="form-group">
                             <label for="api" data-toggle="tooltip" title="选择文本转语音的API接口">选择API：</label>
                             <select class="form-control" id="api" required>
-                                <option value="voice-api">Voice API</option>
+                                <!-- 动态选项 -->
                             </select>
                         </div>
                         <div id="commonParams">
@@ -47,7 +47,7 @@
                                 <input type="range" class="form-control-range" id="pitch" name="pitch" min="-100" max="100" value="0">
                             </div>
                         </div>
-                        <button type="button" class="btn btn-info btn-block mb-3" id="previewButton">试听前5个字</button>
+                        <button type="button" class="btn btn-info btn-block mb-3" id="previewButton">试听前20个字</button>
                         <button type="submit" class="btn btn-primary btn-block" id="generateButton">生成语音</button>
                     </form>
                     <div class="mt-4" id="result" style="display: none;">
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- 历史记录容器 -->
         <div class="col-md-5 mb-3">
             <div class="card shadow-sm">
