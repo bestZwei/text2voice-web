@@ -97,7 +97,7 @@ function generateVoice(isPreview) {
     const apiUrl = apiConfig[apiName].url;
     const speaker = $('#speaker').val();
     const text = $('#text').val();
-    const previewText = isPreview ? text.substring(0, 20) : text;  // 预览时获取前20个字
+    const previewText = isPreview ? text.substring(0, 20) : text; //试听文本20个字 
     let url = `${apiUrl}?t=${encodeURIComponent(previewText)}&v=${encodeURIComponent(speaker)}`;
 
     const rate = $('#rate').val();

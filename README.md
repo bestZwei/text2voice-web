@@ -15,5 +15,10 @@
 
 ## API
 
-通过Cloudflare workers 或者 docker 部署 [voice-api ](https://github.com/bestZwei/voice-api)
+通过Cloudflare workers 或者 docker 部署 [voice-api ](https://github.com/bestZwei/voice-api)，记得设置环境变量 API_KEY
 
+### 使用方法
+
+1. [script.js](https://github.com/bestZwei/text2voice-web/blob/main/script.js) 第 3 行修改`https://ttsapi.zwei.de.eu.org/tts`改成你部署的 API 链接 + `/tts`
+2. [script.js ](https://github.com/bestZwei/text2voice-web/blob/main/script.js) 第 116 行修改成自己的 API_KEY。
+3. 部署本项目到Cloudflare Pages 或者 Vercel 等类似平台。
