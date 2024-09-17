@@ -23,7 +23,7 @@ const apiConfig = {
         ]
     },
     leftsite: {
-        url: "https://t.leftsite.cn/tts",
+        url: "/api2/tts",
         speakers: [
             "zh-CN-XiaoxiaoMultilingualNeural", "zh-CN-XiaoxiaoNeural", "zh-CN-YunxiNeural", "zh-CN-YunjianNeural",
             "zh-CN-XiaoyiNeural", "zh-CN-YunyangNeural", "zh-CN-XiaochenNeural", "zh-CN-XiaohanNeural",
@@ -81,16 +81,12 @@ $(document).ready(function () {
         const apiUrl = apiConfig[apiName].url;
         const speaker = $('#speaker').val();
         const text = $('#text').val();
-        let url = '';
 
+        let url = `${apiUrl}?text=${encodeURIComponent(text)}&speak=${speaker}`;
         if (apiName === 'leftsite') {
             const rate = $('#rate').val();
             const pitch = $('#pitch').val();
-            const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-            const targetUrl = `${apiUrl}?t=${encodeURIComponent(text)}&v=${encodeURIComponent(speaker)}&r=${rate}&p=${pitch}&o=audio-24khz-48kbitrate-mono-mp3`;
-            url = proxyUrl + targetUrl;
-        } else {
-            url = `${apiUrl}?text=${encodeURIComponent(text)}&speak=${encodeURIComponent(speaker)}`;
+            url += `&r=${rate}&p=${pitch}&o=audio-24khz-48kbitrate-mono-mp3`;
         }
 
         $('#loading').show();
@@ -104,7 +100,7 @@ $(document).ready(function () {
                 if (apiName === 'aivoicenet') {
                     voiceUrl = response.voiceurl;
                 } else {
-                    voiceUrl = url;
+                    voiceUrl = URL.createObjectURL(response);
                 }
 
                 $('#audio').attr('src', voiceUrl);
