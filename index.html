@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文本转语音</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container mt-5">
-    <div class="row">
+<div class="container-fluid mt-5">
+    <div class="row justify-content-center">
         <!-- 表单容器 -->
-        <div class="col-md-6 mb-3">
+        <div class="col-md-5 mb-3">
             <div class="card">
                 <div class="card-header text-center">
                     <h2>文本转语音</h2>
@@ -21,7 +22,7 @@
                     <form id="text2voice-form">
                         <!-- API选择 -->
                         <div class="form-group">
-                            <label for="api">选择API：</label>
+                            <label for="api" data-toggle="tooltip" title="选择文本转语音的API接口">选择API：</label>
                             <select class="form-control" id="api" required>
                                 <option value="voiceapi">API 2</option>
                                 <option value="aivoicenet">API 1</option>
@@ -29,11 +30,11 @@
                         </div>
                         <div id="commonParams">
                             <div class="form-group">
-                                <label for="text">输入文本:</label>
+                                <label for="text" data-toggle="tooltip" title="输入要转换为语音的文本">输入文本:</label>
                                 <textarea class="form-control" id="text" rows="4" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="speaker">选择讲述人:</label>
+                                <label for="speaker" data-toggle="tooltip" title="选择语音合成的讲述人">选择讲述人:</label>
                                 <select class="form-control" id="speaker" required></select>
                             </div>
                         </div>
@@ -47,27 +48,28 @@
                                 <input type="range" class="form-control-range" id="pitch" name="pitch" min="-100" max="100" value="0">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">生成语音</button>
+                        <button type="button" class="btn btn-info btn-block mb-3" id="previewButton">试听前10个字</button>
+                        <button type="submit" class="btn btn-primary btn-block" id="generateButton">生成语音</button>
                     </form>
                     <div class="mt-4" id="result" style="display: none;">
                         <audio id="audio" controls class="w-100"></audio>
                         <a id="download" class="btn btn-success btn-block mt-3" href="#" download="voice.mp3">下载语音文件</a>
                     </div>
-                    <div class="mt-4" id="loading" style="display: none;">
-                        正在生成语音，请稍候...
+                    <div class="mt-4 text-center" id="loading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> 正在生成语音，请稍候...
                     </div>
                 </div>
             </div>
         </div>
         
         <!-- 历史记录容器 -->
-        <div class="col-md-6 mb-3">
+        <div class="col-md-5 mb-3">
             <div class="card">
                 <div class="card-header text-center">
                     <h2>历史记录</h2>
-                    <button onclick="clearHistory()" class="btn btn-warning btn-block mb-3">清除历史</button>
                 </div>
                 <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+                    <button onclick="clearHistory()" class="btn btn-warning btn-block mb-3">清除历史</button>
                     <div id="historyItems"></div>
                 </div>
             </div>
@@ -76,6 +78,8 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="script.js"></script>
 
 </body>

@@ -3,8 +3,9 @@ body {
     font-family: 'Arial', sans-serif;
 }
 
-.container {
-    max-width: 100%;
+.container-fluid {
+    max-width: 1200px;
+    margin: auto;
     padding: 20px;
 }
 
@@ -12,6 +13,11 @@ body {
     background-color: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
 }
 
 .card-header {
@@ -19,10 +25,21 @@ body {
     color: white;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.card-header:hover {
+    background-color: #0056b3;
 }
 
 textarea {
     resize: none;
+    transition: border-color 0.3s;
+}
+
+textarea:focus {
+    border-color: #007bff;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 123, 255, 0.6);
 }
 
 .form-group label {
@@ -58,6 +75,11 @@ textarea {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.history-item:hover {
+    background-color: #f1f1f1;
 }
 
 .history-item button {
@@ -69,8 +91,17 @@ textarea {
     margin-right: 20px;
 }
 
+#generateButton {
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+#generateButton:disabled {
+    background-color: #6c757d;
+}
+
 @media (max-width: 768px) {
-    .container {
+    .container-fluid {
         padding: 10px;
     }
 

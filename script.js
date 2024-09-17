@@ -89,6 +89,9 @@ function updateSliderLabel(sliderId, labelId) {
 }
 
 $(document).ready(function () {
+    // 启用工具提示
+    $('[data-toggle="tooltip"]').tooltip();
+    
     // 设置初始API为voiceapi
     updateSpeakerOptions('voiceapi');
 
@@ -103,44 +106,60 @@ $(document).ready(function () {
 
     $('#text2voice-form').on('submit', function (event) {
         event.preventDefault();
+        generateVoice(false);
+    });
 
-        const apiName = $('#api').val();
-        const apiUrl = apiConfig[apiName].url;
-        const speaker = $('#speaker').val();
-        const text = $('#text').val();
-        let url = `${apiUrl}?t=${encodeURIComponent(text)}&v=${encodeURIComponent(speaker)}`;
-
-        if (apiName === 'voiceapi') {
-            const rate = $('#rate').val();
-            const pitch = $('#pitch').val();
-            url += `&r=${encodeURIComponent(rate)}&p=${encodeURIComponent(pitch)}&o=audio-24khz-48kbitrate-mono-mp3`;
-        }
-
-        $('#loading').show();
-        $('#result').hide();
-
-        $.ajax({
-            url: url,
-            method: 'GET',
-            xhrFields: {
-                responseType: 'blob' // 确保返回的是一个Blob对象
-            },
-            success: function (blob) {
-                const voiceUrl = URL.createObjectURL(blob);
-                $('#audio').attr('src', voiceUrl);
-                $('#audio')[0].load();  // 确保加载音频文件
-                $('#download').attr('href', voiceUrl);
-                $('#result').show();
-                addHistoryItem(text, voiceUrl);  
-                $('#loading').hide();
-            },
-            error: function () {
-                alert('请求失败，请检查网络连接');
-                $('#loading').hide();
-            }
-        });
+    $('#previewButton').on('click', function () {
+        generateVoice(true);
     });
 });
+
+function generateVoice(isPreview) {
+    const apiName = $('#api').val();
+    const apiUrl = apiConfig[apiName].url;
+    const speaker = $('#speaker').val();
+    const text = $('#text').val();
+    const previewText = isPreview ? text.substring(0, 10) : text;
+    let url = `${apiUrl}?t=${encodeURIComponent(previewText)}&v=${encodeURIComponent(speaker)}`;
+
+    if (apiName === 'voiceapi') {
+        const rate = $('#rate').val();
+        const pitch = $('#pitch').val();
+        url += `&r=${encodeURIComponent(rate)}&p=${encodeURIComponent(pitch)}&o=audio-24khz-48kbitrate-mono-mp3`;
+    }
+
+    $('#loading').show();
+    $('#result').hide();
+    $('#generateButton').prop('disabled', true);
+    $('#previewButton').prop('disabled', true);
+
+    $.ajax({
+        url: url,
+        method: 'GET',
+        xhrFields: {
+            responseType: 'blob' // 确保返回的是一个Blob对象
+        },
+        success: function (blob) {
+            const voiceUrl = URL.createObjectURL(blob);
+            $('#audio').attr('src', voiceUrl);
+            $('#audio')[0].load();  // 确保加载音频文件
+            if (!isPreview) {
+                $('#download').attr('href', voiceUrl);
+                addHistoryItem(text, voiceUrl);
+            }
+            $('#result').show();
+            $('#loading').hide();
+            $('#generateButton').prop('disabled', false);
+            $('#previewButton').prop('disabled', false);
+        },
+        error: function () {
+            alert('请求失败，请检查网络连接');
+            $('#loading').hide();
+            $('#generateButton').prop('disabled', false);
+            $('#previewButton').prop('disabled', false);
+        }
+    });
+}
 
 function addHistoryItem(text, audioURL) {
     const historyItems = $('#historyItems');
