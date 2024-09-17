@@ -11,3 +11,27 @@ body {
     text-align: center;
     font-style: italic;
 }
+
+.slider-container {
+    margin-top: 10px;
+}
+
+.slider-container label {
+    display: flex;
+    justify-content: space-between;
+}
+
+#history {
+    margin-top: 20px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.history-item button {
+    margin-left: 10px;
+}

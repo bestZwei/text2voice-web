@@ -1,10 +1,4 @@
 const apiConfig = {
-    aivoice: {
-        url: "https://api.pearktrue.cn/api/aivoice/",
-        speakers: [
-            "清萍微调", "晓田微调", "晓华", "晓田", "开放", "菲菲", "琳琳", "艾希"
-        ]
-    },
     aivoicenet: {
         url: "https://api.pearktrue.cn/api/aivoicenet",
         speakers: [
@@ -27,6 +21,22 @@ const apiConfig = {
             "Sadie", "Daniel", "Jacob", "Natalie", "Tyler", "Lily", "Thomas", "Harper", "Henry", "Naomi",
             "Ethan", "Emma", "Ava", "Lucas", "Chloe", "Caleb", "Sofia", "Gabriel", "Ivy"
         ]
+    },
+    leftsite: {
+        url: "https://t.leftsite.cn/tts",
+        speakers: [
+            "zh-CN-XiaoxiaoMultilingualNeural", "zh-CN-XiaoxiaoNeural", "zh-CN-YunxiNeural", "zh-CN-YunjianNeural",
+            "zh-CN-XiaoyiNeural", "zh-CN-YunyangNeural", "zh-CN-XiaochenNeural", "zh-CN-XiaohanNeural",
+            "zh-CN-XiaomengNeural", "zh-CN-XiaomoNeural", "zh-CN-XiaoqiuNeural", "zh-CN-XiaorouNeural",
+            "zh-CN-XiaoruiNeural", "zh-CN-XiaoshuangNeural", "zh-CN-XiaoyanNeural", "zh-CN-XiaoyouNeural",
+            "zh-CN-XiaozhenNeural", "zh-CN-YunfengNeural", "zh-CN-YunhaoNeural", "zh-CN-YunjieNeural",
+            "zh-CN-YunxiaNeural", "zh-CN-YunyeNeural", "zh-CN-YunzeNeural", "zh-CN-YunfanMultilingualNeural",
+            "zh-CN-YunxiaoMultilingualNeural", "zh-CN-guangxi-YunqiNeural", "zh-CN-henan-YundengNeural",
+            "zh-CN-liaoning-XiaobeiNeural", "zh-CN-liaoning-YunbiaoNeural", "zh-CN-shaanxi-XiaoniNeural",
+            "zh-CN-shandong-YunxiangNeural", "zh-CN-sichuan-YunxiNeural", "zh-HK-HiuMaanNeural", 
+            "zh-HK-WanLungNeural", "zh-HK-HiuGaaiNeural", "zh-TW-HsiaoChenNeural", "zh-TW-YunJheNeural",
+            "zh-TW-HsiaoYuNeural"
+        ]
     }
 };
 
@@ -37,16 +47,19 @@ function updateSpeakerOptions(apiName) {
     speakers.forEach(speaker => {
         speakerSelect.append(new Option(speaker, speaker));
     });
+
+    const showAdditionalParams = apiName === 'leftsite';
+    $('#leftsiteParams').toggle(showAdditionalParams);
 }
 
 $(document).ready(function () {
-    // Update speaker options based on selected API
+    // 更新所选 API 的讲述人选项
     $('#api').on('change', function () {
         updateSpeakerOptions(this.value);
     });
 
-    // Set initial speaker options
-    updateSpeakerOptions('aivoice');
+    // 设置初始的讲述人选项
+    updateSpeakerOptions('aivoicenet');
 
     $('#text2voice-form').on('submit', function (event) {
         event.preventDefault();
@@ -55,7 +68,18 @@ $(document).ready(function () {
         const apiUrl = apiConfig[apiName].url;
         const speaker = $('#speaker').val();
         const text = $('#text').val();
-        const params = new URLSearchParams({ speak: speaker, text: text });
+        const params = new URLSearchParams({ 
+            speak: speaker, 
+            text: text
+        });
+
+        if (apiName === 'leftsite') {
+            const rate = $('#rate').val();
+            const pitch = $('#pitch').val();
+            params.append('r', rate);
+            params.append('p', pitch);
+            params.append('o', 'audio-24khz-48kbitrate-mono-mp3');
+        }
 
         $('#loading').show();
         $('#result').hide();
@@ -64,15 +88,11 @@ $(document).ready(function () {
             url: `${apiUrl}?${params.toString()}`,
             method: 'GET',
             success: function (data) {
-                if (data.code === 200) {
-                    const voiceUrl = apiName === 'aivoice' ? data.voice : data.voiceurl;
-                    $('#audio').attr('src', voiceUrl);
-                    $('#download').attr('href', voiceUrl);
-                    $('#result').show();
-                } else {
-                    alert('生成失败，请重试');
-                }
-
+                const voiceUrl = apiName === 'aivoicenet' ? data.voiceurl : `${apiUrl}?${params.toString()}`;
+                $('#audio').attr('src', voiceUrl);
+                $('#download').attr('href', voiceUrl);
+                $('#result').show();
+                addHistoryItem(text, voiceUrl);  // 添加到历史记录
                 $('#loading').hide();
             },
             error: function () {
@@ -82,3 +102,37 @@ $(document).ready(function () {
         });
     });
 });
+
+function addHistoryItem(text, audioURL) {
+    const historyItems = $('#historyItems');
+    const historyItem = $(`
+        <div class="history-item">
+            <span>${text}</span>
+            <div>
+                <button class="btn btn-secondary" onclick="playAudio('${audioURL}')">播放</button>
+                <button class="btn btn-info" onclick="downloadAudio('${audioURL}')">下载</button>
+            </div>
+        </div>
+    `);
+    historyItems.append(historyItem);
+}
+
+function playAudio(audioURL) {
+    const audioSource = $('#audioSource');
+    audioSource.attr('src', audioURL);
+
+    const audioElement = $('#audioPlayer audio')[0];
+    audioElement.load();
+    audioElement.play();
+}
+
+function downloadAudio(audioURL) {
+    const link = document.createElement('a');
+    link.href = audioURL;
+    link.download = 'audio.mp3';
+    link.click();
+}
+
+function clearHistory() {
+    $('#historyItems').empty();
+}
