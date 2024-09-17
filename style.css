@@ -2,9 +2,19 @@ body {
     background-color: #f8f9fa;
 }
 
+.container {
+    max-width: 600px;
+}
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+}
+
 .card {
     max-width: 600px;
     margin: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 #loading {
