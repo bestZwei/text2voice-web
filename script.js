@@ -62,15 +62,12 @@ function updateSliderLabel(sliderId, labelId) {
 }
 
 $(document).ready(function () {
-    // 更新所选 API 的讲述人选项
     $('#api').on('change', function () {
         updateSpeakerOptions(this.value);
     });
 
-    // 设置初始的讲述人选项
     updateSpeakerOptions('aivoicenet');
 
-    // 初始化语速和语调滑块
     updateSliderLabel('rate', 'rateValue');
     updateSliderLabel('pitch', 'pitchValue');
 
@@ -81,7 +78,7 @@ $(document).ready(function () {
         const apiUrl = apiConfig[apiName].url;
         const speaker = $('#speaker').val();
         const text = $('#text').val();
-        let url = `${apiUrl}?text=${encodeURIComponent(text)}&speak=${speaker}`;
+        let url = `${apiUrl}?t=${encodeURIComponent(text)}&v=${speaker}`;
 
         if (apiName === 'voiceapi') {
             const rate = $('#rate').val();
@@ -106,7 +103,7 @@ $(document).ready(function () {
                 $('#audio').attr('src', voiceUrl);
                 $('#download').attr('href', voiceUrl);
                 $('#result').show();
-                addHistoryItem(text, voiceUrl);  // 添加到历史记录
+                addHistoryItem(text, voiceUrl);  
                 $('#loading').hide();
             },
             error: function () {
