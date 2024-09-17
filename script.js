@@ -93,7 +93,7 @@ $(document).ready(function () {
 
     // 字符计数器
     $('#text').on('input', function () {
-        $('#charCount').text(`字符数统计：${this.value.length}`);
+        $('#charCount').text(`字符数统计：${this.value.length}/3600`);
     });
 });
 
@@ -147,35 +147,35 @@ function generateVoice(isPreview) {
         });
     }
     
-    function addHistoryItem(timestamp, text, audioURL) {
-        const historyItems = $('#historyItems');
-        const historyItem = $(`
-            <div class="history-item">
-                <span>${timestamp} - ${text}</span>
-                <div>
-                    <button class="btn btn-secondary" onclick="playAudio('${audioURL}')">播放</button>
-                    <button class="btn btn-info" onclick="downloadAudio('${audioURL}')">下载</button>
-                </div>
+function addHistoryItem(timestamp, text, audioURL) {
+    const historyItems = $('#historyItems');
+    const historyItem = $(`
+        <div class="history-item">
+            <span>${timestamp} - ${text}</span>
+            <div>
+                <button class="btn btn-secondary" onclick="playAudio('${audioURL}')">播放</button>
+                <button class="btn btn-info" onclick="downloadAudio('${audioURL}')">下载</button>
             </div>
-        `);
-        historyItems.append(historyItem);
-    }
-    
-    function playAudio(audioURL) {
-        const audioElement = $('#audio')[0];
-        audioElement.src = audioURL;
-        audioElement.load();  // 确保加载音频文件
-        audioElement.play();
-    }
-    
-    function downloadAudio(audioURL) {
-        const link = document.createElement('a');
-        link.href = audioURL;
-        link.download = 'audio.mp3';
-        link.click();
-    }
-    
-    function clearHistory() {
-        $('#historyItems').empty();
-        alert("历史记录已清除！");
-    }
+        </div>
+    `);
+    historyItems.append(historyItem);
+}
+
+function playAudio(audioURL) {
+    const audioElement = $('#audio')[0];
+    audioElement.src = audioURL;
+    audioElement.load();  // 确保加载音频文件
+    audioElement.play();
+}
+
+function downloadAudio(audioURL) {
+    const link = document.createElement('a');
+    link.href = audioURL;
+    link.download = 'audio.mp3';
+    link.click();
+}
+
+function clearHistory() {
+    $('#historyItems').empty();
+    alert("历史记录已清除！");
+}

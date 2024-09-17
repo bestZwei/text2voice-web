@@ -28,13 +28,12 @@
                             </select>
                         </div>
                         <div id="commonParams">
-                            <div class="form-group">
-                                <label for="text">输入文本:
-                                    <span class="float-right" id="charCount">字符数统计：0</span>
-                                </label>
-                                <textarea class="form-control" id="text" rows="3" required maxlength="3600"></textarea>
+                            <div class="form-group d-flex justify-content-between">
+                                <label for="text">输入文本:</label>
+                                <span id="charCount">字符数统计：0/3600</span>
                             </div>
-                            <div class="form-group">
+                            <textarea class="form-control" id="text" rows="3" required maxlength="3600"></textarea>
+                            <div class="form-group mt-3">
                                 <label for="speaker">选择讲述人:</label>
                                 <select class="form-control" id="speaker" required></select>
                             </div>
