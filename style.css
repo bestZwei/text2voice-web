@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    background: linear-gradient(120deg, #e0f7fa 0%, #ffffff 100%);
     font-family: 'Arial', sans-serif;
     color: #333;
 }
@@ -11,7 +11,7 @@ body {
 }
 
 .card {
-    background: linear-gradient(to bottom, #ffffff, #f1f1f1);
+    background: #ffffff;
     border: none;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -24,7 +24,7 @@ body {
 }
 
 .card-header {
-    background: linear-gradient(to right, #6a11cb, #2575fc);
+    background: linear-gradient(to right, #42a5f5, #478ed1);
     color: white;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -76,7 +76,7 @@ label {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    background: #f8f9fa;
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
@@ -113,7 +113,7 @@ label {
 
 footer {
     padding: 20px;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
+    background: linear-gradient(to right, #42a5f5, #478ed1);
     color: white;
     width: 100%;
     margin-top: 50px;
