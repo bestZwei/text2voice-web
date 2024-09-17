@@ -68,27 +68,28 @@ $(document).ready(function () {
         const apiUrl = apiConfig[apiName].url;
         const speaker = $('#speaker').val();
         const text = $('#text').val();
-        const params = new URLSearchParams({ 
-            speak: speaker, 
-            text: text
-        });
+        let url = `${apiUrl}?text=${encodeURIComponent(text)}&speak=${speaker}`;
 
         if (apiName === 'leftsite') {
             const rate = $('#rate').val();
             const pitch = $('#pitch').val();
-            params.append('r', rate);
-            params.append('p', pitch);
-            params.append('o', 'audio-24khz-48kbitrate-mono-mp3');
+            url += `&r=${rate}&p=${pitch}&o=audio-24khz-48kbitrate-mono-mp3`;
         }
 
         $('#loading').show();
         $('#result').hide();
 
         $.ajax({
-            url: `${apiUrl}?${params.toString()}`,
+            url: url,
             method: 'GET',
-            success: function (data) {
-                const voiceUrl = apiName === 'aivoicenet' ? data.voiceurl : `${apiUrl}?${params.toString()}`;
+            success: function (response) {
+                let voiceUrl;
+                if (apiName === 'aivoicenet') {
+                    voiceUrl = response.voiceurl;
+                } else {
+                    voiceUrl = url;
+                }
+
                 $('#audio').attr('src', voiceUrl);
                 $('#download').attr('href', voiceUrl);
                 $('#result').show();
