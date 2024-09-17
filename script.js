@@ -1,6 +1,5 @@
-// 直接读取 VOICE_API_URLS 环境变量，将其包含在一个 <script> 标签中
-const apiUrlsString = document.currentScript.getAttribute('data-urls');
-const apiUrls = apiUrlsString.split(',');
+// 从 script 标签中读取 VOICE_API_URLS 环境变量
+const apiUrls = window.voiceApiUrls ? window.voiceApiUrls.split(',') : [];
 
 const apiConfig = {
     "voice-api": {
@@ -88,7 +87,9 @@ $(document).ready(function () {
     updateApiOptions(apiConfig);
 
     // 设置初始API为第一个 voice-api
-    $('#api').val(apiConfig["voice-api"].urls[0]);
+    if (apiConfig["voice-api"].urls.length > 0) {
+        $('#api').val(apiConfig["voice-api"].urls[0]);
+    }
     updateSpeakerOptions(apiConfig);
 
     // 更新所选 URL 的讲述人选项
