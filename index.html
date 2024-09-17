@@ -10,15 +10,17 @@
 </head>
 <body>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-10 mb-3">
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center mt-5" style="min-height: 90vh;">
+    <div class="row w-100 justify-content-center">
+        <!-- 表单容器 -->
+        <div class="col-md-8 col-lg-6 mb-3">
             <div class="card shadow-sm">
                 <div class="card-header text-center">
                     <h2>文本转语音</h2>
                 </div>
                 <div class="card-body">
                     <form id="text2voice-form">
+                        <!-- API选择 -->
                         <div class="form-group">
                             <label for="api">选择API：</label>
                             <select class="form-control" id="api" required>
@@ -59,15 +61,15 @@
             </div>
         </div>
         
-        <!-- 历史记录 -->
-        <div class="col-lg-10 mb-3">
+        <!-- 历史记录容器 -->
+        <div class="col-md-8 col-lg-6 mb-3">
             <div class="card shadow-sm">
                 <div class="card-header text-center">
                     <h2>历史记录</h2>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="history-container">
                     <button onclick="clearHistory()" class="btn btn-warning btn-block mb-3">清除历史</button>
-                    <div id="historyItems" style="max-height: 250px; overflow-y: auto;"></div>
+                    <div id="historyItems"></div>
                 </div>
             </div>
         </div>
