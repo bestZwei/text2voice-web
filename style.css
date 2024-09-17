@@ -1,10 +1,13 @@
 body {
-    background: linear-gradient(120deg, #e0f7fa 0%, #ffffff 100%);
+    background: linear-gradient(to bottom, #e6e9f0 0%, #eef1f5 100%);
     font-family: 'Arial', sans-serif;
     color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
-.container-fluid {
+.container {
     max-width: 1200px;
     margin: auto;
     padding: 20px;
@@ -24,21 +27,27 @@ body {
 }
 
 .card-header {
-    background: linear-gradient(to right, #42a5f5, #478ed1);
+    background: linear-gradient(to right, #6a11cb, #2575fc);
     color: white;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: 1.5em;
+    padding: 15px;
 }
 
-.textarea {
+.card-body {
+    padding: 20px;
+}
+
+textarea {
     resize: none;
     border-radius: 5px;
     border: 1px solid #ced4da;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.textarea:focus {
+textarea:focus {
     border-color: #80bdff;
     box-shadow: 0 0 8px rgba(128, 189, 255, 0.6);
 }
@@ -113,12 +122,11 @@ label {
 
 footer {
     padding: 20px;
-    background: linear-gradient(to right, #42a5f5, #478ed1);
+    background: #343a40;
     color: white;
     width: 100%;
-    margin-top: 50px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    position: fixed;
+    bottom: 0;
 }
 
 footer a {
@@ -131,11 +139,15 @@ footer a:hover {
 }
 
 @media (max-width: 768px) {
-    .container-fluid {
+    .container {
         padding: 10px;
     }
 
     .card {
         margin-bottom: 20px;
+    }
+
+    .card-header {
+        font-size: 1.2em;
     }
 }
