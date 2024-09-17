@@ -1,6 +1,7 @@
 const apiConfig = {
-    "voice-api": {
+    "tts-api": {
         url: "https://ttsapi.zwei.de.eu.org/tts",
+        key: "@ak47",
         speakers: {
             "zh-CN-XiaoxiaoNeural": "晓晓",
             "zh-CN-YunxiNeural": "云希",
@@ -70,8 +71,8 @@ $(document).ready(function () {
     // 启用工具提示
     $('[data-toggle="tooltip"]').tooltip();
     
-    // 设置初始API为voice-api
-    updateSpeakerOptions('voice-api');
+    // 设置初始API为tts-api
+    updateSpeakerOptions('tts-api');
 
     // 更新所选 API 的讲述人选项
     $('#api').on('change', function () {
@@ -95,14 +96,11 @@ $(document).ready(function () {
 function generateVoice(isPreview) {
     const apiName = $('#api').val();
     const apiUrl = apiConfig[apiName].url;
+    const apiKey = apiConfig[apiName].key;
     const speaker = $('#speaker').val();
     const text = $('#text').val();
     const previewText = isPreview ? text.substring(0, 20) : text;  // 预览时获取前20个字
-    let url = `${apiUrl}?t=${encodeURIComponent(previewText)}&v=${encodeURIComponent(speaker)}`;
-
-    const rate = $('#rate').val();
-    const pitch = $('#pitch').val();
-    url += `&r=${encodeURIComponent(rate)}&p=${encodeURIComponent(pitch)}&o=audio-24khz-48kbitrate-mono-mp3`;
+    let url = `${apiUrl}?t=${encodeURIComponent(previewText)}&v=${encodeURIComponent(speaker)}&r=${encodeURIComponent($('#rate').val())}&p=${encodeURIComponent($('#pitch').val())}&o=audio-24khz-48kbitrate-mono-mp3`;
 
     $('#loading').show();
     $('#result').hide();
@@ -111,24 +109,25 @@ function generateVoice(isPreview) {
 
     fetch(url, {
         method: 'GET',
+        mode: 'no-cors',
         headers: {
-            'x-api-key': '@ak47'
+            'x-api-key': apiKey
         }
     })
     .then(response => {
-        if(!response.ok) {
+        if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
         return response.blob();
     })
     .then(blob => {
-        const voiceUrl = URL.createObjectURL(blob);
+        const voiceUrl = window.URL.createObjectURL(blob);
         $('#audio').attr('src', voiceUrl);
-        $('#audio')[0].load();  // 确保加载音频文件
+        $('#audio')[0].load();
         if (!isPreview) {
             $('#download').attr('href', voiceUrl);
-            const timestamp = new Date().toLocaleTimeString();  // 获取当前时间
-            const shortenedText = text.length > 5 ? text.substring(0, 5) + '...' : text;  // 截取前5个字
+            const timestamp = new Date().toLocaleTimeString();
+            const shortenedText = text.length > 5 ? text.substring(0, 5) + '...' : text;
             addHistoryItem(timestamp, shortenedText, voiceUrl);
         }
         $('#result').show();
@@ -138,7 +137,6 @@ function generateVoice(isPreview) {
     })
     .catch(error => {
         console.error('There was a problem with your fetch operation:', error);
-        alert('请求失败，请检查网络连接');
         $('#loading').hide();
         $('#generateButton').prop('disabled', false);
         $('#previewButton').prop('disabled', false);
@@ -162,7 +160,7 @@ function addHistoryItem(timestamp, text, audioURL) {
 function playAudio(audioURL) {
     const audioElement = $('#audio')[0];
     audioElement.src = audioURL;
-    audioElement.load();  // 确保加载音频文件
+    audioElement.load();
     audioElement.play();
 }
 
