@@ -2,6 +2,8 @@
 
 一个简单的文本转语音应用程序，支持通过 API 调用将文本转换为语音，并提供在线试听和下载功能。该项目包括一个使用 Bootstrap 构建的前端页面，支持通过 Cloudflare Pages 部署。
 
+Demo: https://text2speech.ciallo.de/
+
 ## 功能特性
 
 - 支持文本转语音 API
@@ -28,5 +30,5 @@
 + fork 准备修改代码
 + script.js 第 3 行修改 `https://ttsapi.zwei.de.eu.org/tts` 改成你部署的 API **链接 + /tts**
 + script.js 第 116 行 `@ak47` 修改成自己的 API_KEY。
-+ 部署本项目到Cloudflare Pages 或者 Vercel 等类似平台。
++ 部署本项目到 Cloudflare Pages 或者 Vercel 等类似平台。
 + 设置自定义域名
