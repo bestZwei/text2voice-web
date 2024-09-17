@@ -22,8 +22,8 @@ const apiConfig = {
             "Ethan", "Emma", "Ava", "Lucas", "Chloe", "Caleb", "Sofia", "Gabriel", "Ivy"
         ]
     },
-    leftsite: {
-        url: "/api2/tts",
+    voiceapi: {
+        url: "https://voiceapi.firefly.oy.lc/tts",
         speakers: [
             "zh-CN-XiaoxiaoMultilingualNeural", "zh-CN-XiaoxiaoNeural", "zh-CN-YunxiNeural", "zh-CN-YunjianNeural",
             "zh-CN-XiaoyiNeural", "zh-CN-YunyangNeural", "zh-CN-XiaochenNeural", "zh-CN-XiaohanNeural",
@@ -48,8 +48,8 @@ function updateSpeakerOptions(apiName) {
         speakerSelect.append(new Option(speaker, speaker));
     });
 
-    const showAdditionalParams = apiName === 'leftsite';
-    $('#leftsiteParams').toggle(showAdditionalParams);
+    const showAdditionalParams = apiName === 'voiceapi';
+    $('#voiceapiParams').toggle(showAdditionalParams);
 }
 
 function updateSliderLabel(sliderId, labelId) {
@@ -81,9 +81,9 @@ $(document).ready(function () {
         const apiUrl = apiConfig[apiName].url;
         const speaker = $('#speaker').val();
         const text = $('#text').val();
-
         let url = `${apiUrl}?text=${encodeURIComponent(text)}&speak=${speaker}`;
-        if (apiName === 'leftsite') {
+
+        if (apiName === 'voiceapi') {
             const rate = $('#rate').val();
             const pitch = $('#pitch').val();
             url += `&r=${rate}&p=${pitch}&o=audio-24khz-48kbitrate-mono-mp3`;
@@ -100,7 +100,7 @@ $(document).ready(function () {
                 if (apiName === 'aivoicenet') {
                     voiceUrl = response.voiceurl;
                 } else {
-                    voiceUrl = URL.createObjectURL(response);
+                    voiceUrl = url;
                 }
 
                 $('#audio').attr('src', voiceUrl);
