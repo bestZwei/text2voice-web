@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Voice</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2>文本转语音</h2>
+            </div>
+            <div class="card-body">
+                <form id="text2voice-form">
+                    <div class="form-group">
+                        <label for="speaker">选择讲述人:</label>
+                        <select class="form-control" id="speaker" required>
+                            <option value="清萍微调">清萍微调</option>
+                            <option value="晓田微调">晓田微调</option>
+                            <option value="晓华">晓华</option>
+                            <option value="晓田">晓田</option>
+                            <option value="开放">开放</option>
+                            <option value="菲菲">菲菲</option>
+                            <option value="琳琳">琳琳</option>
+                            <option value="艾希">艾希</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="text">输入文本:</label>
+                        <textarea class="form-control" id="text" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">生成语音</button>
+                </form>
+                <div class="mt-4" id="result" style="display: none;">
+                    <audio id="audio" controls class="w-100"></audio>
+                    <a id="download" class="btn btn-success btn-block mt-3" href="#" download="voice.mp3">下载语音文件</a>
+                </div>
+                <div class="mt-4" id="loading" style="display: none;">
+                    正在生成语音，请稍候...
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
