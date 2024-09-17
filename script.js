@@ -101,6 +101,7 @@ $(document).ready(function () {
                 }
 
                 $('#audio').attr('src', voiceUrl);
+                $('#audio')[0].load();  // 确保加载音频文件
                 $('#download').attr('href', voiceUrl);
                 $('#result').show();
                 addHistoryItem(text, voiceUrl);  
@@ -129,11 +130,9 @@ function addHistoryItem(text, audioURL) {
 }
 
 function playAudio(audioURL) {
-    const audioSource = $('#audioSource');
-    audioSource.attr('src', audioURL);
-
-    const audioElement = $('#audioPlayer audio')[0];
-    audioElement.load();
+    const audioElement = $('#audio')[0];
+    audioElement.src = audioURL;
+    audioElement.load();  // 确保加载音频文件
     audioElement.play();
 }
 
@@ -147,3 +146,4 @@ function downloadAudio(audioURL) {
 function clearHistory() {
     $('#historyItems').empty();
 }
+
