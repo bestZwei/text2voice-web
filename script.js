@@ -122,6 +122,7 @@ function updateSpeakerOptions(apiName) {
         speakerSelect.append(new Option(value, key));
     });
 
+    // 仅当API为 aivoicenet 时隐藏附加参数
     const showAdditionalParams = apiName !== 'aivoicenet';
     $('#voiceapiParams').toggle(showAdditionalParams);
 }
@@ -136,7 +137,7 @@ function updateSliderLabel(sliderId, labelId) {
 }
 
 $(document).ready(function () {
-    // 设置初始API为voiceapi
+    // 默认选择API2
     updateSpeakerOptions('voiceapi');
 
     // 更新所选 API 的讲述人选项
@@ -155,12 +156,12 @@ $(document).ready(function () {
         const apiUrl = apiConfig[apiName].url;
         const speaker = $('#speaker').val();
         const text = $('#text').val();
-        let url = `${apiUrl}?t=${encodeURIComponent(text)}&v=${speaker}`;
+        let url = `${apiUrl}?t=${encodeURIComponent(text)}&v=${encodeURIComponent(speaker)}`;
 
         if (apiName !== 'aivoicenet') {
             const rate = $('#rate').val();
             const pitch = $('#pitch').val();
-            url += `&r=${rate}&p=${pitch}&o=audio-24khz-48kbitrate-mono-mp3`;
+            url += `&r=${encodeURIComponent(rate)}&p=${encodeURIComponent(pitch)}&o=audio-24khz-48kbitrate-mono-mp3`;
         }
 
         $('#loading').show();
