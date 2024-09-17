@@ -9,6 +9,7 @@ body {
     min-height: 100vh;
 }
 
+
 .container-fluid {
     padding: 20px;
     flex-grow: 1;
@@ -63,9 +64,13 @@ label {
 }
 
 #history-container {
-    max-height: calc(100% - 70px);   /* 使历史记录容器最大高度与卡片对齐 */
-    overflow-y: auto;
+    height: 100%;  /* 使历史记录容器与卡片高度对齐 */
     padding: 10px;
+}
+
+.overflow-auto {
+    max-height: calc(100% - 70px); /* 滚动区域最大高度与卡片对齐 */
+    overflow-y: auto;
 }
 
 .history-item {
@@ -119,7 +124,6 @@ footer {
     text-align: center;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    margin-top: auto;
 }
 
 footer a {
