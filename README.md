@@ -26,8 +26,8 @@ Demo: https://text2speech.ciallo.de/
 + **部署自己的API**，访问 https://github.com/bestZwei/voice-api
 
 + 复制 worker.js 部署到 CF Workers
-+ 添加环境变量 API_KEY，假设是 @ak47
-+ 绑定自定义域名，假设是  https://ttsapi.zwei.de.eu.org
++ 添加环境变量 API_KEY，假设是`@ak47`
++ 绑定自定义域名，假设是  `https://ttsapi.zwei.de.eu.org`
 + **部署前端**，访问 https://github.com/bestZwei/text2voice-web
 + fork 准备修改代码
 + script.js 第 3 行修改 `https://ttsapi.zwei.de.eu.org/tts` 改成你部署的 API **链接 + /tts**
