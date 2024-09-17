@@ -10,7 +10,7 @@ $(document).ready(function () {
         $('#result').hide();
 
         $.ajax({
-            url: `https://api.pearktrue.cn/api/aivoice/?${params.toString()}`,
+            url: `https://api.pearktrue.cn/api/aivoicenet/?${params.toString()}`,
             method: 'GET',
             success: function (data) {
                 if (data.code === 200) {
