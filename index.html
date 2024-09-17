@@ -10,59 +10,71 @@
 <body>
 
 <div class="container mt-5">
-    <div class="card">
-        <div class="card-header text-center">
-            <h2>文本转语音</h2>
-        </div>
-        <div class="card-body">
-            <form id="text2voice-form">
-                <!-- API选择 -->
-                <div class="form-group">
-                    <label for="api">选择API：</label>
-                    <select class="form-control" id="api" required>
-                        <option value="voiceapi">API 2</option>
-                        <option value="aivoicenet">API 1</option>
-                    </select>
+    <div class="row">
+        <!-- 表单容器 -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2>文本转语音</h2>
                 </div>
-                <div id="commonParams">
-                    <div class="form-group">
-                        <label for="text">输入文本:</label>
-                        <textarea class="form-control" id="text" rows="4" required></textarea>
+                <div class="card-body">
+                    <form id="text2voice-form">
+                        <!-- API选择 -->
+                        <div class="form-group">
+                            <label for="api">选择API：</label>
+                            <select class="form-control" id="api" required>
+                                <option value="voiceapi">API 2</option>
+                                <option value="aivoicenet">API 1</option>
+                            </select>
+                        </div>
+                        <div id="commonParams">
+                            <div class="form-group">
+                                <label for="text">输入文本:</label>
+                                <textarea class="form-control" id="text" rows="4" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="speaker">选择讲述人:</label>
+                                <select class="form-control" id="speaker" required></select>
+                            </div>
+                        </div>
+                        <div id="voiceapiParams">
+                            <div class="form-group slider-container">
+                                <label for="rate">语速: <span id="rateValue">0</span></label>
+                                <input type="range" class="form-control-range" id="rate" name="rate" min="-100" max="100" value="0">
+                            </div>
+                            <div class="form-group slider-container">
+                                <label for="pitch">语调: <span id="pitchValue">0</span></label>
+                                <input type="range" class="form-control-range" id="pitch" name="pitch" min="-100" max="100" value="0">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">生成语音</button>
+                    </form>
+                    <div class="mt-4" id="result" style="display: none;">
+                        <audio id="audio" controls class="w-100"></audio>
+                        <a id="download" class="btn btn-success btn-block mt-3" href="#" download="voice.mp3">下载语音文件</a>
                     </div>
-                    <div class="form-group">
-                        <label for="speaker">选择讲述人:</label>
-                        <select class="form-control" id="speaker" required></select>
+                    <div class="mt-4" id="loading" style="display: none;">
+                        正在生成语音，请稍候...
                     </div>
                 </div>
-                <div id="voiceapiParams">
-                    <div class="form-group slider-container">
-                        <label for="rate">语速: <span id="rateValue">0</span></label>
-                        <input type="range" class="form-control-range" id="rate" name="rate" min="-100" max="100" value="0">
-                    </div>
-                    <div class="form-group slider-container">
-                        <label for="pitch">语调: <span id="pitchValue">0</span></label>
-                        <input type="range" class="form-control-range" id="pitch" name="pitch" min="-100" max="100" value="0">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">生成语音</button>
-            </form>
-            <div class="mt-4" id="result" style="display: none;">
-                <audio id="audio" controls class="w-100"></audio>
-                <a id="download" class="btn btn-success btn-block mt-3" href="#" download="voice.mp3">下载语音文件</a>
             </div>
-            <div class="mt-4" id="loading" style="display: none;">
-                正在生成语音，请稍候...
+        </div>
+        
+        <!-- 历史记录容器 -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2>历史记录</h2>
+                    <button onclick="clearHistory()" class="btn btn-warning btn-block mb-3">清除历史</button>
+                </div>
+                <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+                    <div id="historyItems"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="history" class="container mt-5">
-    <h2>历史记录</h2>
-    <button onclick="clearHistory()" class="btn btn-warning btn-block mb-3">清除历史</button>
-    <div id="historyItems"></div>
-</div>
-    
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="script.js"></script>
 

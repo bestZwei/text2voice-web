@@ -4,8 +4,11 @@ body {
 }
 
 .container {
-    max-width: 700px;
+    max-width: 100%;
     padding: 20px;
+}
+
+.card {
     background-color: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -64,4 +67,14 @@ textarea {
 .history-item span {
     flex-grow: 1;
     margin-right: 20px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .card {
+        margin-bottom: 20px;
+    }
 }
