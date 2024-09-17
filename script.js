@@ -90,6 +90,11 @@ $(document).ready(function () {
     $('#previewButton').on('click', function () {
         generateVoice(true);
     });
+
+    // 字符计数器
+    $('#text').on('input', function () {
+        $('#charCount').text(`字符数统计：${this.value.length}`);
+    });
 });
 
 function generateVoice(isPreview) {
@@ -174,4 +179,3 @@ function generateVoice(isPreview) {
         $('#historyItems').empty();
         alert("历史记录已清除！");
     }
-    

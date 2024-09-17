@@ -29,8 +29,10 @@
                         </div>
                         <div id="commonParams">
                             <div class="form-group">
-                                <label for="text">输入文本:</label>
-                                <textarea class="form-control" id="text" rows="3" required></textarea>
+                                <label for="text">输入文本:
+                                    <span class="float-right" id="charCount">字符数统计：0</span>
+                                </label>
+                                <textarea class="form-control" id="text" rows="3" required maxlength="3600"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="speaker">选择讲述人:</label>
