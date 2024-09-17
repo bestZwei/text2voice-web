@@ -52,6 +52,15 @@ function updateSpeakerOptions(apiName) {
     $('#leftsiteParams').toggle(showAdditionalParams);
 }
 
+function updateSliderLabel(sliderId, labelId) {
+    const slider = $(`#${sliderId}`);
+    const label = $(`#${labelId}`);
+    label.text(slider.val());
+    slider.on('input', function () {
+        label.text(this.value);
+    });
+}
+
 $(document).ready(function () {
     // 更新所选 API 的讲述人选项
     $('#api').on('change', function () {
@@ -61,6 +70,10 @@ $(document).ready(function () {
     // 设置初始的讲述人选项
     updateSpeakerOptions('aivoicenet');
 
+    // 初始化语速和语调滑块
+    updateSliderLabel('rate', 'rateValue');
+    updateSliderLabel('pitch', 'pitchValue');
+
     $('#text2voice-form').on('submit', function (event) {
         event.preventDefault();
 
@@ -68,14 +81,12 @@ $(document).ready(function () {
         const apiUrl = apiConfig[apiName].url;
         const speaker = $('#speaker').val();
         const text = $('#text').val();
-        let url;
+        let url = `${apiUrl}?text=${encodeURIComponent(text)}&speak=${speaker}`;
 
         if (apiName === 'leftsite') {
             const rate = $('#rate').val();
             const pitch = $('#pitch').val();
-            url = `${apiUrl}?t=${encodeURIComponent(text)}&v=${speaker}&r=${rate}&p=${pitch}&o=audio-24khz-48kbitrate-mono-mp3`;
-        } else {
-            url = `https://api.pearktrue.cn/api/aivoicenet/?text=${encodeURIComponent(text)}&speak=${encodeURIComponent(speaker)}`;
+            url += `&r=${rate}&p=${pitch}&o=audio-24khz-48kbitrate-mono-mp3`;
         }
 
         $('#loading').show();
@@ -99,7 +110,7 @@ $(document).ready(function () {
                 $('#loading').hide();
             },
             error: function () {
-                alert('请求失败，请检查网络连接或参数设置');
+                alert('请求失败，请检查网络连接');
                 $('#loading').hide();
             }
         });
@@ -124,7 +135,7 @@ function playAudio(audioURL) {
     const audioSource = $('#audioSource');
     audioSource.attr('src', audioURL);
 
-    const audioElement = $('#audio')[0];
+    const audioElement = $('#audioPlayer audio')[0];
     audioElement.load();
     audioElement.play();
 }
@@ -132,7 +143,7 @@ function playAudio(audioURL) {
 function downloadAudio(audioURL) {
     const link = document.createElement('a');
     link.href = audioURL;
-    link.download = 'voice.mp3';
+    link.download = 'audio.mp3';
     link.click();
 }
 
