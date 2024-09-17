@@ -24,29 +24,34 @@ const apiConfig = {
     },
     voiceapi: {
         url: "https://voiceapi.firefly.oy.lc/tts",
-        speakers: [
-            "zh-CN-XiaoxiaoMultilingualNeural", "zh-CN-XiaoxiaoNeural", "zh-CN-YunxiNeural", "zh-CN-YunjianNeural",
-            "zh-CN-XiaoyiNeural", "zh-CN-YunyangNeural", "zh-CN-XiaochenNeural", "zh-CN-XiaohanNeural",
-            "zh-CN-XiaomengNeural", "zh-CN-XiaomoNeural", "zh-CN-XiaoqiuNeural", "zh-CN-XiaorouNeural",
-            "zh-CN-XiaoruiNeural", "zh-CN-XiaoshuangNeural", "zh-CN-XiaoyanNeural", "zh-CN-XiaoyouNeural",
-            "zh-CN-XiaozhenNeural", "zh-CN-YunfengNeural", "zh-CN-YunhaoNeural", "zh-CN-YunjieNeural",
-            "zh-CN-YunxiaNeural", "zh-CN-YunyeNeural", "zh-CN-YunzeNeural", "zh-CN-YunfanMultilingualNeural",
-            "zh-CN-YunxiaoMultilingualNeural", "zh-CN-guangxi-YunqiNeural", "zh-CN-henan-YundengNeural",
-            "zh-CN-liaoning-XiaobeiNeural", "zh-CN-liaoning-YunbiaoNeural", "zh-CN-shaanxi-XiaoniNeural",
-            "zh-CN-shandong-YunxiangNeural", "zh-CN-sichuan-YunxiNeural", "zh-HK-HiuMaanNeural", 
-            "zh-HK-WanLungNeural", "zh-HK-HiuGaaiNeural", "zh-TW-HsiaoChenNeural", "zh-TW-YunJheNeural",
-            "zh-TW-HsiaoYuNeural"
-        ]
+        speakersUrl: "https://voiceapi.firefly.oy.lc/voices",
     }
 };
 
 function updateSpeakerOptions(apiName) {
-    const speakers = apiConfig[apiName].speakers;
     const speakerSelect = $('#speaker');
     speakerSelect.empty();
-    speakers.forEach(speaker => {
-        speakerSelect.append(new Option(speaker, speaker));
-    });
+
+    if (apiName === 'aivoicenet') {
+        const speakers = apiConfig[apiName].speakers;
+        speakers.forEach(speaker => {
+            speakerSelect.append(new Option(speaker, speaker));
+        });
+    } else if (apiName === 'voiceapi') {
+        $.ajax({
+            url: `${apiConfig[apiName].speakersUrl}?l=zh-CN`,
+            method: 'GET',
+            success: function(response) {
+                const speakers = response;
+                for (const [key, value] of Object.entries(speakers)) {
+                    speakerSelect.append(new Option(value, key));
+                }
+            },
+            error: function() {
+                alert('无法获取讲述人列表，请检查网络连接');
+            }
+        });
+    }
 
     const showAdditionalParams = apiName === 'voiceapi';
     $('#voiceapiParams').toggle(showAdditionalParams);
