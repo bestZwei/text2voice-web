@@ -11,6 +11,7 @@ body {
 
 .container-fluid {
     padding: 20px;
+    flex-grow: 1;
 }
 
 .card {
@@ -19,6 +20,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;  /* 使卡片占满高度 */
 }
 
 .card:hover {
@@ -61,7 +63,7 @@ label {
 }
 
 #history-container {
-    max-height: 300px;
+    max-height: calc(100% - 70px);   /* 使历史记录容器最大高度与卡片对齐 */
     overflow-y: auto;
     padding: 10px;
 }
@@ -110,7 +112,7 @@ label {
 }
 
 footer {
-    padding: 10px 15px;
+    padding: 15px 20px;
     background: linear-gradient(to right, #42a5f5, #478ed1);
     color: white;
     width: 100%;
