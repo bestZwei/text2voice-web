@@ -1,20 +1,29 @@
 body {
-    background-color: #f8f9fa;
+    background-color: #f4f7f6;
+    font-family: 'Arial', sans-serif;
 }
 
 .container {
-    max-width: 600px;
+    max-width: 700px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 .card-header {
     background-color: #007bff;
     color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
-.card {
-    max-width: 600px;
-    margin: auto;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+textarea {
+    resize: none;
+}
+
+.form-group label {
+    font-weight: bold;
 }
 
 #loading {
@@ -32,7 +41,10 @@ body {
 }
 
 #history {
-    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 .history-item {
@@ -40,8 +52,16 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 .history-item button {
     margin-left: 10px;
+}
+
+.history-item span {
+    flex-grow: 1;
+    margin-right: 20px;
 }
