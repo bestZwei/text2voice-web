@@ -32,18 +32,18 @@ const apiConfig = {
             "zh-CN-YunfanMultilingualNeural": "云帆 多语言",
             "zh-CN-YunxiaoMultilingualNeural": "云萧 多语言",
             "zh-CN-guangxi-YunqiNeural": "云奇 广西",
-            "zh-CN-henan-YundengNeural": "云登",
+            "zh-CN-henan-YundengNeural": "云登 河南",
             "zh-CN-liaoning-XiaobeiNeural": "晓北 辽宁",
             "zh-CN-liaoning-YunbiaoNeural": "云彪 辽宁",
-            "zh-CN-shaanxi-XiaoniNeural": "晓妮",
-            "zh-CN-shandong-YunxiangNeural": "云翔",
+            "zh-CN-shaanxi-XiaoniNeural": "晓妮 山西",
+            "zh-CN-shandong-YunxiangNeural": "云翔 山东",
             "zh-CN-sichuan-YunxiNeural": "云希 四川",
-            "zh-HK-HiuMaanNeural": "曉曼",
-            "zh-HK-WanLungNeural": "雲龍",
-            "zh-HK-HiuGaaiNeural": "曉佳",
-            "zh-TW-HsiaoChenNeural": "曉臻",
-            "zh-TW-YunJheNeural": "雲哲",
-            "zh-TW-HsiaoYuNeural": "曉雨"
+            "zh-HK-HiuMaanNeural": "晓曼 粤语",
+            "zh-HK-WanLungNeural": "云龙 粤语",
+            "zh-HK-HiuGaaiNeural": "晓佳 粤语",
+            "zh-TW-HsiaoChenNeural": "晓臻 台湾",
+            "zh-TW-YunJheNeural": "云哲 台湾",
+            "zh-TW-HsiaoYuNeural": "晓雨 台湾"
         }
     }
 };
