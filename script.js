@@ -82,6 +82,11 @@ $(document).ready(function () {
     updateSliderLabel('rate', 'rateValue');
     updateSliderLabel('pitch', 'pitchValue');
 
+    // 字符计数器
+    $('#text').on('input', function () {
+        $('#charCount').text(`字符数统计：${this.value.length}/3600`);
+    });
+
     $('#text2voice-form').on('submit', function (event) {
         event.preventDefault();
         generateVoice(false);
@@ -89,11 +94,6 @@ $(document).ready(function () {
 
     $('#previewButton').on('click', function () {
         generateVoice(true);
-    });
-
-    // 字符计数器
-    $('#text').on('input', function () {
-        $('#charCount').text(`字符数统计：${this.value.length}/3600`);
     });
 });
 
@@ -137,16 +137,16 @@ function generateVoice(isPreview) {
             $('#loading').hide();
             $('#generateButton').prop('disabled', false);
             $('#previewButton').prop('disabled', false);
-            },
-            error: function () {
-                alert('请求失败，请检查网络连接');
-                $('#loading').hide();
-                $('#generateButton').prop('disabled', false);
-                $('#previewButton').prop('disabled', false);
-            }
-        });
-    }
-    
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(`请求失败：${textStatus} - ${errorThrown}`);
+            $('#loading').hide();
+            $('#generateButton').prop('disabled', false);
+            $('#previewButton').prop('disabled', false);
+        }
+    });
+}
+
 function addHistoryItem(timestamp, text, audioURL) {
     const historyItems = $('#historyItems');
     const historyItem = $(`
