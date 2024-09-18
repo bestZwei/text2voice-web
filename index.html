@@ -20,12 +20,19 @@
                 </div>
                 <div class="card-body">
                     <form id="text2voice-form">
-                        <!-- API选择 -->
-                        <div class="form-group">
-                            <label for="api">选择API：</label>
-                            <select class="form-control" id="api" required>
-                                <option value="voice-api">Voice API</option>
-                            </select>
+                        <div class="form-row">
+                            <!-- API选择 -->
+                            <div class="form-group col-md-6">
+                                <label for="api">选择API：</label>
+                                <select class="form-control" id="api" required>
+                                    <option value="voice-api">Voice API</option>
+                                </select>
+                            </div>
+                            <!-- 选择讲述人 -->
+                            <div class="form-group col-md-6">
+                                <label for="speaker">选择讲述人:</label>
+                                <select class="form-control" id="speaker" required></select>
+                            </div>
                         </div>
                         <div id="commonParams">
                             <div class="form-group d-flex justify-content-between">
@@ -33,10 +40,6 @@
                                 <span id="charCount">字符数统计：0/3600</span>
                             </div>
                             <textarea class="form-control" id="text" rows="3" required maxlength="3600"></textarea>
-                            <div class="form-group mt-3">
-                                <label for="speaker">选择讲述人:</label>
-                                <select class="form-control" id="speaker" required></select>
-                            </div>
                         </div>
                         <div id="voiceapiParams">
                             <div class="form-group">
