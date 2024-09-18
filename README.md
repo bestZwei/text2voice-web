@@ -31,6 +31,6 @@ Demo: https://text2speech.ciallo.de/
 + **部署前端**，访问 https://github.com/bestZwei/text2voice-web
 + fork 准备修改代码
 + script.js 第 3 行修改 `https://ttsapi.zwei.de.eu.org/tts` 改成你部署的 API **链接 + /tts**
-+ script.js 第 116 行 `@ak47` 修改成自己的 API_KEY。
++ script.js 第 121 行 `@ak47` 修改成自己的 API_KEY。
 + 部署本项目到 Cloudflare Pages 或者 Vercel 等类似平台。
 + 设置自定义域名
