@@ -7,11 +7,15 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow: hidden; /* 禁止滚动 */
 }
 
 .container-fluid {
     padding: 20px;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .card {
