@@ -48,6 +48,8 @@ const apiConfig = {
     }
 };
 
+let lastRequestTime = 0;
+
 function updateSpeakerOptions(apiName) {
     const speakers = apiConfig[apiName].speakers;
     const speakerSelect = $('#speaker');
@@ -89,13 +91,30 @@ $(document).ready(function () {
 
     $('#text2voice-form').on('submit', function (event) {
         event.preventDefault();
-        generateVoice(false);
+        if (canMakeRequest()) {
+            generateVoice(false);
+        } else {
+            alert('请稍候再试，每5秒只能请求一次。');
+        }
     });
 
     $('#previewButton').on('click', function () {
-        generateVoice(true);
+        if (canMakeRequest()) {
+            generateVoice(true);
+        } else {
+            alert('请稍候再试，每5秒只能请求一次。');
+        }
     });
 });
+
+function canMakeRequest() {
+    const currentTime = Date.now();
+    if (currentTime - lastRequestTime >= 5000) {
+        lastRequestTime = currentTime;
+        return true;
+    }
+    return false;
+}
 
 function generateVoice(isPreview) {
     const apiName = $('#api').val();
