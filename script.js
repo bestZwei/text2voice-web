@@ -45,10 +45,30 @@ const apiConfig = {
             "zh-TW-YunJheNeural": "云哲 台湾",
             "zh-TW-HsiaoYuNeural": "晓雨 台湾"
         }
+    },
+    "lobe-tts": {
+        url: "https://tts-api.deno.dev/v1/audio/speech",
+        authToken: "@SVD",
+        getVoicesUrl: "https://tts-api.deno.dev/voices",
+        speakers: {}  // 将在初始化时填充
     }
 };
 
-let lastRequestTime = 0;
+async function fetchLobeVoices() {
+    const response = await fetch(apiConfig["lobe-tts"].getVoicesUrl, {
+        headers: { "Authorization": `Bearer ${apiConfig["lobe-tts"].authToken}` }
+    });
+    const voices = await response.json();
+    apiConfig["lobe-tts"].speakers = voices.reduce((acc, voice) => {
+        acc[voice.model] = voice.friendlyName;
+        return acc;
+    }, {});
+}
+
+async function initialize() {
+    await fetchLobeVoices();
+    updateSpeakerOptions('voice-api');
+}
 
 function updateSpeakerOptions(apiName) {
     const speakers = apiConfig[apiName].speakers;
@@ -69,12 +89,11 @@ function updateSliderLabel(sliderId, labelId) {
 }
 
 $(document).ready(function () {
+    initialize();
+
     // 启用工具提示
     $('[data-toggle="tooltip"]').tooltip();
     
-    // 设置初始API为voice-api
-    updateSpeakerOptions('voice-api');
-
     // 更新所选 API 的讲述人选项
     $('#api').on('change', function () {
         updateSpeakerOptions(this.value);
@@ -107,6 +126,8 @@ $(document).ready(function () {
     });
 });
 
+let lastRequestTime = 0;
+
 function canMakeRequest() {
     const currentTime = Date.now();
     if (currentTime - lastRequestTime >= 5000) {
@@ -133,12 +154,12 @@ function generateVoice(isPreview) {
     $('#generateButton').prop('disabled', true);
     $('#previewButton').prop('disabled', true);
 
+    const headers = apiName === "lobe-tts" ? { 'Authorization': `Bearer ${apiConfig["lobe-tts"].authToken}` } : {};
+
     $.ajax({
         url: url,
         method: 'GET',
-        headers: {
-            'x-api-key': '@ak47'  // 添加 API 密钥
-        },
+        headers: headers,
         xhrFields: {
             responseType: 'blob' // 确保返回的是一个Blob对象
         },
