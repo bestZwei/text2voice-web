@@ -92,11 +92,11 @@ function generateVoice(isPreview) {
 
         makeRequest(url, isPreview, text);
     } else if (apiName === 'lobe-api') {
-        // 将rate和pitch的范围从-100到100转换为-1到1
-        rate = (rate / 100).toFixed(2);
-        pitch = (pitch / 100).toFixed(2);
+        // 分别将rate和pitch的范围从-100到100转换为-1到1
+        const rateConverted = (rate / 100).toFixed(2);
+        const pitchConverted = (pitch / 100).toFixed(2);
 
-        const url = `${apiUrl}?model=${encodeURIComponent(speaker)}&input=${encodeURIComponent(previewText)}&voice=${encodeURIComponent(`rate:${rate}|pitch:${pitch}`)}`;
+        const url = `${apiUrl}?model=${encodeURIComponent(speaker)}&input=${encodeURIComponent(previewText)}&voice=${encodeURIComponent(`rate:${rateConverted}|pitch:${pitchConverted}`)}`;
         
         $.ajax({
             url: url,
