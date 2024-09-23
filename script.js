@@ -83,8 +83,8 @@ function generateVoice(isPreview) {
     const speaker = $('#speaker').val();
     const text = $('#text').val();
     const previewText = isPreview ? text.substring(0, 20) : text;
-    const rate = $('#rate').val();
-    const pitch = $('#pitch').val();
+    let rate = $('#rate').val();
+    let pitch = $('#pitch').val();
 
     if (apiName === 'voice-api') {
         let url = `${apiUrl}?t=${encodeURIComponent(previewText)}&v=${encodeURIComponent(speaker)}`;
@@ -92,6 +92,10 @@ function generateVoice(isPreview) {
 
         makeRequest(url, isPreview, text);
     } else if (apiName === 'lobe-api') {
+        // 将rate和pitch的范围从-100到100转换为-1到1
+        rate = (rate / 100).toFixed(2);
+        pitch = (pitch / 100).toFixed(2);
+
         const url = `${apiUrl}?model=${encodeURIComponent(speaker)}&input=${encodeURIComponent(previewText)}&voice=${encodeURIComponent(`rate:${rate}|pitch:${pitch}`)}`;
         
         $.ajax({
