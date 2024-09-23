@@ -32,7 +32,7 @@ API2(lobe-api) 通过 [Deno](https://dash.deno.com/) 在 Playground 中部署 [d
 + 可以部署另一个 API 服务：注册 [Deno](https://dash.deno.com/) ，新建、并在 Playground 中复制部署 [deno_tts_api.ts](https://github.com/bestZwei/voice-api/blob/main/deno_tts_api.ts)，可以设置自定义域名，也可以用它提供的 xxx.deno.dev
 + **部署前端**，访问 https://github.com/bestZwei/text2voice-web
 + fork 准备修改代码
-+ script.js 第 126 行 `@ak47` 修改成自己的 API_KEY。
++ script.js 第 139 行 `@ak47` 修改成自己的 API_KEY。
 + speakers.json 中， 第 3 行修改 `https://ttsapi.zwei.de.eu.org/tts` 改成你 workers 部署的 API **链接 + /tts** ，第 50 行`https://tts-api.deno.dev/v1/audio/speech` 改成你 Deno 部署的API **链接+ /v1/audio/speech**
 + 部署本项目到 Cloudflare Pages 或者 Vercel 等类似平台。
 + 设置自定义域名
