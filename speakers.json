@@ -1,6 +1,6 @@
 {
     "voice-api": {
-        "url": "https://ttsapi.zwei.de.eu.org/tts",
+        "url": "https://20240929.ttsapi.zwei.de.eu.org/tts",
         "speakers": {
             "zh-CN-XiaoxiaoNeural": "晓晓",
             "zh-CN-YunxiNeural": "云希",

@@ -19,6 +19,8 @@ Demo: https://text2speech.ciallo.de/
 
 ## API
 
+#### # 请自行部署，我会定期更换代码中的 API 链接
+
 API1(voice-api) 通过Cloudflare workers 或者 docker 部署 [voice-api ](https://github.com/bestZwei/voice-api/blob/main/worker.js)，记得设置环境变量 API_KEY。
 
 API2(lobe-api) 通过 [Deno](https://dash.deno.com/) 在 Playground 中部署 [deno_tts_api.ts](https://github.com/bestZwei/voice-api/blob/main/deno_tts_api.ts)
