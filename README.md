@@ -1,3 +1,5 @@
+**新仓库——> https://github.com/bestzwei/ciallo-tts**
+
 # Text2Voice Web
 
 一个简单的文本转语音应用程序，支持通过 API 调用将文本转换为语音，并提供在线试听和下载功能。该项目包括一个使用 Bootstrap 构建的前端页面，支持通过 Cloudflare Pages 部署。
